@@ -56,11 +56,13 @@
           <option value='boolean'>Yes / No<option>
         </select>
     </div>
-</form>
-<div class="row">
-  <button class="btn btn-primary float-right" (click)="createSubForm()">Add subform</button>
-  <button class="btn btn-danger float-right" (click)="deleteForm()">Delete</button>
+
+<div class="btn-group">
+  <button class="btn btn-primary" (click)="createSubForm()">Add subform</button>
+  <button class="btn btn-danger" (click)="deleteForm()">Delete</button>
 </div>
+</form>
+
 <ul class="list-group" *ngIf='form.children.length > 0'>
   <li class="list-group-item" *ngFor="let childrenForm of form.children">
     <app-form-view [form]="childrenForm"></app-form-view>
