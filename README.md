@@ -24,12 +24,12 @@ Open browser on adderss: localhost:8080
 
 # Todo
 
-1. Add save forms in file functionally
-2. Add save forms in browser functionally
-3. Add load froms from browser functionally
-4. Add clear forms functionally
+1. Add save forms in file functionality
+2. Add save forms in browser functionality
+3. Add load froms from browser functionality
+4. Add clear forms functionality
 5. Migrate most logic from template to component
-6. Change types on enum end apply polymorphism mechanism
+6. Change types form model to enum's end apply polymorphism mechanisms
 7. Add tests
 
 # Know bugs
