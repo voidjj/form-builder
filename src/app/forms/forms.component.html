@@ -1,0 +1,7 @@
+<ul class="list-group">
+  <li class="list-group-item" *ngFor="let form of formGroup$">
+    <app-form-view [form]="form" (change)="countChange($event)"></app-form-view>
+  </li>
+</ul>
+
+<button class="btn btn-primary" (click)="createForm()">Add Input</button>
