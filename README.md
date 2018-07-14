@@ -1,8 +1,14 @@
-#Getting started
+# Getting started
 
 1. Go to project folder and install dependencies:
 ```bash
 yarn install
+```
+
+or in case of some problem
+
+```bash
+npm install
 ```
 
 2. Start the project
@@ -10,11 +16,13 @@ yarn install
 yarn start
 ```
 
-#Usage
+
+
+# Usage
 
 Open browser on adderss: localhost:8080
 
-#Todo
+# Todo
 
 1. Add save forms in file functionally
 2. Add save forms in browser functionally
@@ -24,7 +32,7 @@ Open browser on adderss: localhost:8080
 6. Change types on enum end apply polymorphism mechanism
 7. Add tests
 
-#Know bugs
+# Know bugs
 
 1. Problem with select options (some values are empty)
 
