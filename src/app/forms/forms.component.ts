@@ -16,24 +16,30 @@ import { FormDataService } from '../form-data.service';
 export class FormsComponent implements OnInit {
 
   constructor(private formDataService: FormDataService) { }
+
+  //forms$: Form[];
+
   ngOnInit() {
+    this.formDataService.createRootForm();
+    this.getForms();
   }
 
-  formGroup$: Form[];
+  isLoading:boolean = false;
+  forms: Observable<Form[]>
+
+  getForms() {
+    this.forms = this.formDataService.getRootForms()
+      .pipe(finalize(()=> this.isLoading = false));
+  }
 
   createForm() {
-    let newForm: Form = Form.createNewRoot();
-    this.formDataService.create(newForm);
-    this.reloadForms();
+    this.formDataService.createRootForm();
+    this.getForms();
   }
 
-  reloadForms() {
-    this.formGroup$ = this.formDataService.getForms();
+  onRemoveForm(form: Form) {
+    console.log('onRemoveForm');
+    this.formDataService.removeForm(form);
+    this.getForms();
   }
-
-  countChange(event: any){
-    this.reloadForms();
-  }
-
-
 }

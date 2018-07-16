@@ -1,31 +1,23 @@
 export class Form {
 
   id: number = -1;
+  question: string = 'p1';
   root: boolean;
-  condition: string = 'equals'
-  question: string = '';
-  textAnswer: string = '';
-  numberAnswer: number;
-  booleanAnswer: boolean;
+  parentId: number;
 
-  children: Form[] = [];
-  type: string= 'text';
-
-  constructor(root: boolean) {
-    this.id = -1;
+  constructor(id: number, root: boolean, parentId: number) {
+    this.id = id;
+    this.question = '';
     this.root = root;
+    this.parentId = parentId
   }
 
-  public static createNew():Form {
-    return new Form (undefined);
+  public static createRoot(id: number):Form {
+    return new Form(id, true, undefined);
   }
 
-  public static createNewRoot():Form {
-    return new Form (true);
-  }
-
-  isRoot():boolean {
-    return this.root;
+  public static create(id: number, parentId: number):Form {
+    return new Form(id, false, parentId);
   }
 
 }

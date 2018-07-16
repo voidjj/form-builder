@@ -1,6 +1,7 @@
 import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup  } from '@angular/forms';
-
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Observable }        from 'rxjs';
+import { finalize } from 'rxjs/operators';
 import { Form } from '../models/form/form';
 import { FormDataService } from '../form-data.service';
 
@@ -11,32 +12,62 @@ import { FormDataService } from '../form-data.service';
 })
 
 export class FormViewComponent implements OnInit {
-
   @Input() form: Form;
 
-  @Output() change: EventEmitter<number> = new EventEmitter<number>();
+  @Output() removeForm: EventEmitter<Form> = new EventEmitter<Form>();
 
-  constructor(private formDataService: FormDataService) { }
+  numberConditions = [
+    {name: 'Equals', value: 'equals'},
+    {name: 'Greater than', value: 'greater_than'},
+    {name: 'Less than', value: 'less_than'}
+  ];
 
-  ngOnInit() {}
+  formTypes = [
+    {name: 'Text', value: 'text'},
+    {name: 'Number', value: 'number'},
+    {name: 'Yes / No', value: 'boolean'},
+  ];
 
-  createSubForm() {
-    this.formDataService.createSubFormOn(this.form);
-    this.reload();
+  logicConditions = [
+    {name: 'Equals', value: 'equals'}
+  ];
+
+  formViewGroup: FormGroup;
+
+  isLoading:boolean = false;
+  childrenForm: Observable<Form[]>
+
+
+  constructor(private fb: FormBuilder, private formDataService: FormDataService) {
   }
 
-  reload() {
-    this.change.emit(this.form.id);
+  ngOnInit() {
+    this.formViewGroup = this.fb.group({
+      questionControl: '',
+      typeControl: [this.formTypes[0]],
+      conditionControl: [this.numberConditions[0]]
+    });
+    //this.formViewGroup.valueChanges.subscribe();
   }
 
-  getParentType(): String {
-    let type: string = this.formDataService.getParentTypeById(this.form.id);
-    return type;
+  createForm() {
+    this.formDataService.createFormWithParent(this.form);
+    this.getChildrenForm();
+  }
+
+  getChildrenForm(){
+    this.childrenForm = this.formDataService.getFormsOfParent(this.form)
+      .pipe(finalize(()=> this.isLoading = false));
   }
 
   deleteForm() {
-    //this.formDataService.deleteFormById(this.form.id);
-    this.reload();
+    this.removeForm.emit(this.form);
+  }
+
+  onRemoveForm(form: Form) {
+    console.log('onRemoveForm');
+    this.formDataService.removeForm(form);
+    this.getChildrenForm();
   }
 
 }
