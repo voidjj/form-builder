@@ -20,14 +20,7 @@ Open browser on adderss: localhost:8080
 2. Add save forms in browser functionality
 3. Add load froms from browser functionality
 4. Add clear forms functionality
-5. Migrate most logic from template to component
-6. Change types form model to enum's end apply polymorphism mechanisms
-7. Add preview mode functionality
-8. Add tests for all components
-
-# Know bugs
-
-1. Problem with select options (some values are empty)
+5. Add preview mode functionality. Add tests for all components
 
 # License
 
