@@ -1,10 +1,6 @@
-<br>
-Type: {{form.type}}
-
 <form [formGroup]="formViewGroup">
 
 <div *ngIf="form.root == false">
-parentType: {{getParentType()}}
   <!-- NUMBER QUESTION -->
   <div class='form-row' *ngIf="getParentType() == 'number'">
     <div class="form-group col-md-8">
