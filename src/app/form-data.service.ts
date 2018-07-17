@@ -52,6 +52,11 @@ export class FormDataService {
     return of(newForm).pipe(delay(this.delayMs));
   }
 
+  getParentOf(form: Form): Form {
+    const parentForm = this.forms.find(f => f.parentId === form.id);
+    return parentForm
+  }
+
   removeForm(form: Form) {
     _.remove(this.forms,{id: form.id});
   }

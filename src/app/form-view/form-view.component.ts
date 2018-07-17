@@ -45,7 +45,8 @@ export class FormViewComponent implements OnInit {
     this.formViewGroup = this.fb.group({
       questionControl: '',
       typeControl: [this.formTypes[0]],
-      conditionControl: [this.numberConditions[0]]
+      conditionControl: [this.numberConditions[0]],
+      responseControl: '',
     });
     //this.formViewGroup.valueChanges.subscribe();
   }
@@ -69,5 +70,11 @@ export class FormViewComponent implements OnInit {
     this.formDataService.removeForm(form);
     this.getChildrenForm();
   }
+
+  getParentType():String{
+    let parentForm:Form = this.formDataService.getParentOf(this.form);
+    return parentForm.type;
+  }
+
 
 }
