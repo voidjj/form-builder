@@ -17,10 +17,12 @@ Open browser on adderss: localhost:8080
 # Todo
 
 1. Add save forms in file functionality
-2. Add save forms in browser functionality
-3. Add load froms from browser functionality
-4. Add clear forms functionality
-5. Add preview mode functionality. Add tests for all components
+2. Add preview mode functionality.
+3. Add tests for all components
+
+# Know bugs
+
+1. Problem with loading sub forms from browser
 
 # License
 
