@@ -32,6 +32,11 @@ export class FormViewComponent implements OnInit {
     {name: 'Equals', value: 'equals'}
   ];
 
+  logicResponses = [
+    {name: 'Yes', value: 'true'},
+    {name: 'No', value: 'false'},
+  ];
+
   formViewGroup: FormGroup;
 
   isLoading:boolean = false;
@@ -43,10 +48,10 @@ export class FormViewComponent implements OnInit {
 
   ngOnInit() {
     this.formViewGroup = this.fb.group({
-      questionControl: '',
-      typeControl: [this.formTypes[1]],
-      conditionControl: [this.numberConditions[0]],
-      responseControl: '',
+      questionControl: this.form.question || '',
+      typeControl:  this.form.type || [this.formTypes[1]],
+      conditionControl:   this.form.condition || [this.numberConditions[0]],
+      responseControl:  this.form.response || '',
     });
 
     this.formViewGroup.valueChanges.subscribe((f)=>{
@@ -54,6 +59,7 @@ export class FormViewComponent implements OnInit {
       this.form.question = f.questionControl;
       this.form.type = f.typeControl;
       this.form.condition = f.conditionControl;
+      this.form.response = f.responseControl;
 
     });
   }
@@ -73,7 +79,7 @@ export class FormViewComponent implements OnInit {
   }
 
   onRemoveForm(form: Form) {
-    console.log('onRemoveForm');
+
     this.formDataService.removeForm(form);
     this.getChildrenForm();
   }
@@ -81,7 +87,6 @@ export class FormViewComponent implements OnInit {
   getParentType():String{
     let parentForm:Form = this.formDataService.getParentOf(this.form);
     return parentForm.type;
-    //return 'text'
   }
 
 

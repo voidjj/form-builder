@@ -38,8 +38,17 @@ export class FormsComponent implements OnInit {
   }
 
   onRemoveForm(form: Form) {
-    console.log('onRemoveForm');
     this.formDataService.removeForm(form);
     this.getForms();
+  }
+
+  loadFromBrowser(){
+    this.formDataService.loadFromStorage();
+    this.getForms();
+  }
+
+  saveInBrowser(){
+    this.formDataService.saveInStorage();
+    //this.getForms();
   }
 }

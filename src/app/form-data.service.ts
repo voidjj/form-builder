@@ -60,4 +60,12 @@ export class FormDataService {
   removeForm(form: Form) {
     _.remove(this.forms,{id: form.id});
   }
+
+  saveInStorage(){
+    localStorage.setItem('formbuilder', JSON.stringify(this.forms))
+  }
+
+  loadFromStorage(){
+    this.forms = JSON.parse(localStorage.getItem('formbuilder'))
+  }
 }

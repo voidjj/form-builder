@@ -7,13 +7,14 @@ export class Form {
 
   type: string;
   condition: string = 'equals';
-
+response: string ;
   constructor(id: number, root: boolean, parentId: number, type:string) {
     this.id = id;
     this.question = '';
     this.root = root;
     this.parentId = parentId;
     this.type = type;
+
   }
 
   public static createRoot(id: number):Form {
