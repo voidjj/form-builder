@@ -44,11 +44,18 @@ export class FormViewComponent implements OnInit {
   ngOnInit() {
     this.formViewGroup = this.fb.group({
       questionControl: '',
-      typeControl: [this.formTypes[0]],
+      typeControl: [this.formTypes[1]],
       conditionControl: [this.numberConditions[0]],
       responseControl: '',
     });
-    //this.formViewGroup.valueChanges.subscribe();
+
+    this.formViewGroup.valueChanges.subscribe((f)=>{
+
+      this.form.question = f.questionControl;
+      this.form.type = f.typeControl;
+      this.form.condition = f.conditionControl;
+
+    });
   }
 
   createForm() {
@@ -74,6 +81,7 @@ export class FormViewComponent implements OnInit {
   getParentType():String{
     let parentForm:Form = this.formDataService.getParentOf(this.form);
     return parentForm.type;
+    //return 'text'
   }
 
 

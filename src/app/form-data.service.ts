@@ -41,7 +41,7 @@ export class FormDataService {
   }
 
   createFormWithParent(parentForm: Form) {
-    let newForm:Form = Form.create(this.getNextId(), parentForm.id);
+    let newForm:Form = Form.create(this.getNextId(), parentForm.id, parentForm.type);
     console.log("ID: " + newForm.id + " | PID: " + parentForm.id)
     this.forms.push(newForm);
   }
@@ -53,7 +53,7 @@ export class FormDataService {
   }
 
   getParentOf(form: Form): Form {
-    const parentForm = this.forms.find(f => f.parentId === form.id);
+    const parentForm = this.forms.find(f => f.id === form.parentId);
     return parentForm
   }
 

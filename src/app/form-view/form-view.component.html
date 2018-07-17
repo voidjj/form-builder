@@ -1,11 +1,12 @@
 <br>
+Type: {{form.type}}
 
 <form [formGroup]="formViewGroup">
 
 <div *ngIf="form.root == false">
-
+parentType: {{getParentType()}}
   <!-- NUMBER QUESTION -->
-  <div class='form-row' *ngIf="getParentType() === 'number'">
+  <div class='form-row' *ngIf="getParentType() == 'number'">
     <div class="form-group col-md-8">
       <label for="condition">Condition</label>
         <select id="condition" name="condition" class="form-control" formControlName="conditionControl">
@@ -18,9 +19,8 @@
     </div>
 
 </div>
-<!-- NUMBER QUESTION END-->
 <!-- TEXT QUESTION -->
-<div class='form-row' *ngIf="getParentType() === 'text'">
+<div class='form-row' *ngIf="getParentType() == 'text'">
   <div class="form-group col-md-8">
     <label for="condition">Condition</label>
       <select id="condition" name="condition" class="form-control" formControlName="conditionControl">
@@ -31,10 +31,9 @@
     <label for="textResponse">Text response</label>
       <input type="text" id="textResponse" name="textResponse" class="form-control" formControlName="responseControl">
   </div>
-</div>  <!-- TEXT QUESTION END-->
-
+</div>
 <!-- BOOLEAN QUESTION -->
-<div class='form-row' *ngIf="getParentType() === 'boolean'">
+<div class='form-row' *ngIf="getParentType() == 'boolean'">
   <div class="form-group col-md-8">
     <label for="condition">Condition</label>
       <select id="condition" name="condition" class="form-control" formControlName="conditionControl">
