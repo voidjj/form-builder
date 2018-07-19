@@ -54,12 +54,15 @@
       </select>
   </div>
 </form>
-<div class="btn-group">
-  <button class="btn btn-primary" (click)="createForm()">Add subform</button>
-  <button class="btn btn-danger" (click)="deleteForm()">Delete</button>
+<div class="d-flex justify-content-between bd-highlight mb-3">
+  <div class="p-2 bd-highlight">
+    <button class="btn btn-primary" (click)="createSubForm()">Add response input</button>
+  </div>
+  <div class="p-2 bd-highlight">
+    <button class="btn btn-danger" (click)="deleteSubForm()">Delete</button></div>
 </div>
 <ul class="list-group">
   <li class="list-group-item" *ngFor="let childrenForm of childrenForm">
-    <app-form-view [form]="children_form" (removeForm)="onRemoveForm($event)"></app-form-view>
+    <app-form-view [form]="childrenForm" (removeForm)="onRemoveEventForm($event)"></app-form-view>
   </li>
 </ul>

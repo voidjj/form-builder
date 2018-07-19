@@ -7,7 +7,7 @@ import * as _ from 'lodash';
 })
 
 export class FormDataService {
-  lastId: number = 0;
+  lastId = 0;
   forms: Form[] = new Array<Form>();
 
   getNextId(): number {

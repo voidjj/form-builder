@@ -15,26 +15,26 @@ export class FormsComponent implements OnInit {
   constructor(private formDataService: FormDataService) { }
   ngOnInit() {
     this.formDataService.createRootForm();
-    this.getForms();
+    this.applyForms();
   }
 
-  getForms() {
+  applyForms() {
     this.forms = this.formDataService.getRootForms();
   }
 
-  createForm() {
+  createRootForm() {
     this.formDataService.createRootForm();
-    this.getForms();
+    this.applyForms();
   }
 
   onRemoveForm(form: Form) {
     this.formDataService.removeForm(form);
-    this.getForms();
+    this.applyForms();
   }
 
   loadFromBrowser() {
     this.formDataService.loadFromStorage();
-    this.getForms();
+    this.applyForms();
   }
 
   saveInBrowser() {
