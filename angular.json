@@ -106,8 +106,8 @@
           }
         }
       }
-    }
-    /* ,"form-builder-e2e": {
+    },
+    "form-builder-e2e": {
       "root": "e2e",
       "projectType": "application",
       "architect": {
@@ -130,7 +130,7 @@
           }
         }
       }
-    } */
+    }
   },
   "defaultProject": "form-builder"
 }
