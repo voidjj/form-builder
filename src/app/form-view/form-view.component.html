@@ -1,54 +1,51 @@
 <form [formGroup]="formViewGroup">
-
-<div *ngIf="form.root == false">
-  <!-- NUMBER QUESTION -->
-  <div class='form-row' *ngIf="getParentType() == 'number'">
+  <div *ngIf="form.root == false">
+    <!-- NUMBER QUESTION -->
+    <div class="form-row" *ngIf="getParentType() == 'number'">
+      <div class="form-group col-md-8">
+        <label for="number-condition">Condition</label>
+          <select id="number-condition" name="condition" class="form-control" formControlName="conditionControl">
+            <option [value]="condition.value" *ngFor="let condition of numberConditions">{{condition.name}}</option>
+          </select>
+      </div>
+      <div class="form-group col-md-4">
+        <label for="number-response">Number response</label>
+          <input type="number" id="number-response" name="numberResponse" class="form-control" formControlName="responseControl"/>
+      </div>
+    </div>
+  <!-- TEXT QUESTION -->
+  <div class="form-row" *ngIf="getParentType() == 'text'">
     <div class="form-group col-md-8">
-      <label for="condition">Condition</label>
-        <select id="condition" name="condition" class="form-control" formControlName="conditionControl">
-          <option [value]="condition.value" *ngFor="let condition of numberConditions">{{condition.name}}</option>
+      <label for="text-condition">Condition</label>
+        <select id="text-condition" name="condition" class="form-control" formControlName="conditionControl">
+          <option [value]="condition.value" *ngFor="let condition of logicConditions">{{condition.name}}</option>
         </select>
     </div>
     <div class="form-group col-md-4">
-      <label for="numberResponse">Number response</label>
-        <input type="number" id="numberResponse" name="numberResponse" class="form-control" formControlName="responseControl">
+      <label for="text-response">Text response</label>
+        <input type="text" id="text-response" name="textResponse" class="form-control" formControlName="responseControl"/>
     </div>
-
-</div>
-<!-- TEXT QUESTION -->
-<div class='form-row' *ngIf="getParentType() == 'text'">
-  <div class="form-group col-md-8">
-    <label for="condition">Condition</label>
-      <select id="condition" name="condition" class="form-control" formControlName="conditionControl">
-        <option [value]="condition.value" *ngFor="let condition of logicConditions">{{condition.name}}</option>
-      </select>
   </div>
-  <div class="form-group col-md-4">
-    <label for="textResponse">Text response</label>
-      <input type="text" id="textResponse" name="textResponse" class="form-control" formControlName="responseControl">
+  <!-- BOOLEAN QUESTION -->
+  <div class="form-row" *ngIf="getParentType() == 'boolean'">
+    <div class="form-group col-md-8">
+      <label for="condition">Condition</label>
+        <select id="condition" name="condition" class="form-control" formControlName="conditionControl">
+          <option [value]="condition.value" *ngFor="let condition of logicConditions">{{condition.name}}</option>
+        </select>
+    </div>
+    <div class="form-group col-md-4">
+      <label for="logic-response">Logic response</label>
+        <select id="logic-response" name="logicResponse" class="form-control" formControlName="responseControl">
+          <option [value]="response.value" *ngFor="let response of logicResponses">{{response.name}}</option>
+        </select>
+    </div>
   </div>
-</div>
-<!-- BOOLEAN QUESTION -->
-<div class='form-row' *ngIf="getParentType() == 'boolean'">
-  <div class="form-group col-md-8">
-    <label for="condition">Condition</label>
-      <select id="condition" name="condition" class="form-control" formControlName="conditionControl">
-        <option [value]="condition.value" *ngFor="let condition of logicConditions">{{condition.name}}</option>
-      </select>
+  <!-- QUESTIONS END-->
   </div>
-  <div class="form-group col-md-4">
-    <label for="logicResponse">Logic response</label>
-      <select id="logicResponse" name="logicResponse" class="form-control" formControlName="responseControl">
-        <option [value]="response.value" *ngFor="let response of logicResponses">{{response.name}}</option>
-      </select>
-  </div>
-</div>
-<!-- BOOLEAN QUESTION END-->
-</div>
-
   <div class="form-group">
     <label for="question">Question</label>
-      <input type="text" id="question" name="question" class="form-control" formControlName="questionControl">
+      <input type="text" id="question" name="question" class="form-control" formControlName="questionControl"/>
   </div>
   <div class="form-group">
     <label for="type">Response Type</label>
@@ -57,14 +54,12 @@
       </select>
   </div>
 </form>
-
 <div class="btn-group">
   <button class="btn btn-primary" (click)="createForm()">Add subform</button>
   <button class="btn btn-danger" (click)="deleteForm()">Delete</button>
 </div>
-
 <ul class="list-group">
-  <li class="list-group-item" *ngFor="let childrenForm of childrenForm | async ">
-    <app-form-view [form]="childrenForm" (removeForm)="onRemoveForm($event)"></app-form-view>
+  <li class="list-group-item" *ngFor="let childrenForm of childrenForm">
+    <app-form-view [form]="children_form" (removeForm)="onRemoveForm($event)"></app-form-view>
   </li>
 </ul>

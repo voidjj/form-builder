@@ -1,8 +1,4 @@
 import { Injectable , Directive } from '@angular/core';
-import {Observable, of} from 'rxjs';
-
-import {delay} from 'rxjs/operators'
-
 import { Form } from './models/form/form';
 import * as _ from 'lodash';
 
@@ -11,61 +7,54 @@ import * as _ from 'lodash';
 })
 
 export class FormDataService {
-
   lastId: number = 0;
-
   forms: Form[] = new Array<Form>();
 
-  delayMs = 1; //only for testing
-  getNextId():number {
+  getNextId(): number {
     this.lastId++;
     return this.lastId;
   }
 
-  getRootForms(): Observable<Form[]> {
-    let forms:Form[] = _.filter(this.forms, {root: true});
-      console.log("root count: "+forms.length)
-    return of(forms).pipe(delay(this.delayMs));
+  getRootForms(): Form[] {
+    const forms: Form[] = _.filter(this.forms, {root: true});
+    return forms;
   }
 
-  getFormsOfParent(parentForm: Form): Observable<Form[]> {
-    let childrenForm:Form[] = _.filter(this.forms, {parentId: parentForm.id});
-    console.log("parentId: "+ parentForm.id);
-    console.log("childrenForm count: "+childrenForm.length)
-    return of(childrenForm).pipe(delay(this.delayMs));
+  getFormsOfParent(parentForm: Form): Form[] {
+    const childrenForm: Form[] = _.filter(this.forms, {parentId: parentForm.id});
+    return childrenForm;
   }
 
   createRootForm() {
-    let newForm:Form = Form.createRoot(this.getNextId());
+    const newForm: Form = Form.createRoot(this.getNextId());
     this.forms.push(newForm);
   }
 
   createFormWithParent(parentForm: Form) {
-    let newForm:Form = Form.create(this.getNextId(), parentForm.id, parentForm.type);
-    console.log("ID: " + newForm.id + " | PID: " + parentForm.id)
+    const newForm: Form = Form.create(this.getNextId(), parentForm.id, parentForm.type);
     this.forms.push(newForm);
   }
 
-  updageForm(form: Form): Observable<Form> {
+  updageForm(form: Form): Form {
     const oldForm = this.forms.find(f => f.id === form.id);
     const newForm = Object.assign(oldForm, form);
-    return of(newForm).pipe(delay(this.delayMs));
+    return newForm;
   }
 
   getParentOf(form: Form): Form {
     const parentForm = this.forms.find(f => f.id === form.parentId);
-    return parentForm
+    return parentForm;
   }
 
   removeForm(form: Form) {
-    _.remove(this.forms,{id: form.id});
+    _.remove(this.forms, {id: form.id});
   }
 
-  saveInStorage(){
-    localStorage.setItem('formbuilder', JSON.stringify(this.forms))
+  saveInStorage() {
+    localStorage.setItem('formbuilder', JSON.stringify(this.forms));
   }
 
-  loadFromStorage(){
-    this.forms = JSON.parse(localStorage.getItem('formbuilder'))
+  loadFromStorage() {
+    this.forms = JSON.parse(localStorage.getItem('formbuilder'));
   }
 }

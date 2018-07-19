@@ -1,66 +1,40 @@
 import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Observable }        from 'rxjs';
-import { finalize } from 'rxjs/operators';
+import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { Form } from '../models/form/form';
 import { FormDataService } from '../form-data.service';
+import { logicResponses } from '../models/form/form';
+import { numberConditions } from '../models/form/form';
+import { formTypes } from '../models/form/form';
+import { logicConditions } from '../models/form/form';
 
 @Component({
   selector: 'app-form-view',
-  templateUrl: './form-view.component.html',
-  styleUrls: ['./form-view.component.scss']
+  templateUrl: './form-view.component.html'
 })
 
 export class FormViewComponent implements OnInit {
   @Input() form: Form;
-
   @Output() removeForm: EventEmitter<Form> = new EventEmitter<Form>();
 
-  numberConditions = [
-    {name: 'Equals', value: 'equals'},
-    {name: 'Greater than', value: 'greater_than'},
-    {name: 'Less than', value: 'less_than'}
-  ];
-
-  formTypes = [
-    {name: 'Text', value: 'text'},
-    {name: 'Number', value: 'number'},
-    {name: 'Yes / No', value: 'boolean'},
-  ];
-
-  logicConditions = [
-    {name: 'Equals', value: 'equals'}
-  ];
-
-  logicResponses = [
-    {name: 'Yes', value: 'true'},
-    {name: 'No', value: 'false'},
-  ];
-
   formViewGroup: FormGroup;
+  isLoading: boolean = false;
+  childrenForm: Form[];
 
-  isLoading:boolean = false;
-  childrenForm: Observable<Form[]>
-
-
-  constructor(private fb: FormBuilder, private formDataService: FormDataService) {
-  }
+  constructor(private fb: FormBuilder, private formDataService: FormDataService) {}
 
   ngOnInit() {
     this.formViewGroup = this.fb.group({
       questionControl: this.form.question || '',
-      typeControl:  this.form.type || [this.formTypes[1]],
-      conditionControl:   this.form.condition || [this.numberConditions[0]],
-      responseControl:  this.form.response || '',
+      typeControl: this.form.type || [formTypes[0]],
+      conditionControl: this.form.condition || [numberConditions[0]],
+      responseControl: this.form.response || ''
     });
 
-    this.formViewGroup.valueChanges.subscribe((f)=>{
-
+    this.formViewGroup.valueChanges.subscribe(f => {
       this.form.question = f.questionControl;
       this.form.type = f.typeControl;
       this.form.condition = f.conditionControl;
       this.form.response = f.responseControl;
-
     });
   }
 
@@ -69,9 +43,8 @@ export class FormViewComponent implements OnInit {
     this.getChildrenForm();
   }
 
-  getChildrenForm(){
-    this.childrenForm = this.formDataService.getFormsOfParent(this.form)
-      .pipe(finalize(()=> this.isLoading = false));
+  getChildrenForm() {
+    this.childrenForm = this.formDataService.getFormsOfParent(this.form);
   }
 
   deleteForm() {
@@ -79,15 +52,12 @@ export class FormViewComponent implements OnInit {
   }
 
   onRemoveForm(form: Form) {
-
     this.formDataService.removeForm(form);
     this.getChildrenForm();
   }
 
-  getParentType():String{
-    let parentForm:Form = this.formDataService.getParentOf(this.form);
+  getParentType(): String {
+    const parentForm: Form = this.formDataService.getParentOf(this.form);
     return parentForm.type;
   }
-
-
 }

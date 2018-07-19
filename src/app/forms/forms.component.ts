@@ -1,35 +1,25 @@
 import { Component, OnInit } from '@angular/core';
 import { Input, Output, EventEmitter } from '@angular/core';
-import { Observable }        from 'rxjs';
-import { finalize } from 'rxjs/operators';
-
 import { Form } from '../models/form/form';
 import { FormDataService } from '../form-data.service';
 
 @Component({
   selector: 'app-forms',
   templateUrl: './forms.component.html',
-  styleUrls: ['./forms.component.scss'],
   providers: [FormDataService]
 })
 
 export class FormsComponent implements OnInit {
+  forms: Form[];
 
   constructor(private formDataService: FormDataService) { }
-
-  //forms$: Form[];
-
   ngOnInit() {
     this.formDataService.createRootForm();
     this.getForms();
   }
 
-  isLoading:boolean = false;
-  forms: Observable<Form[]>
-
   getForms() {
-    this.forms = this.formDataService.getRootForms()
-      .pipe(finalize(()=> this.isLoading = false));
+    this.forms = this.formDataService.getRootForms();
   }
 
   createForm() {
@@ -42,13 +32,12 @@ export class FormsComponent implements OnInit {
     this.getForms();
   }
 
-  loadFromBrowser(){
+  loadFromBrowser() {
     this.formDataService.loadFromStorage();
     this.getForms();
   }
 
-  saveInBrowser(){
+  saveInBrowser() {
     this.formDataService.saveInStorage();
-    //this.getForms();
   }
 }

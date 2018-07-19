@@ -5,12 +5,10 @@
       <a class="p-2 text-dark" (click)="loadFromBrowser()" href="#">Load from browser</a>
       <a class="p-2 text-dark" (click)="saveInBrowser()" href="#">Save in browser</a>
     </nav>
-  </div>
-
+</div>
 <ul class="list-group">
-  <li class="list-group-item" *ngFor="let form of forms | async">
+  <li class="list-group-item" *ngFor="let form of forms">
     <app-form-view [form]="form" (removeForm)="onRemoveForm($event)"></app-form-view>
   </li>
 </ul>
-
 <button class="btn btn-primary" (click)="createForm()">Add Input</button>
