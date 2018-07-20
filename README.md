@@ -12,17 +12,17 @@ yarn start
 
 # Usage
 
-Open browser on adderss: localhost:8080
+Open browser on address: localhost:8080
+
+# Features
+
+- Possible of make form structure without defining the type.
+- Possible of store and load forms in browser.
 
 # Todo
 
-1. Add save forms in file functionality
-2. Add preview mode functionality.
-3. Add tests for all components
-
-# Know bugs
-
-1. Problem with loading sub forms from browser
+1. Add save forms as file functionality
+2. Add tests for all components
 
 # License
 
