@@ -12,7 +12,6 @@
     "test:ci": "npm run env -s && npm run lint -s && ng test --code-coverage --watch=false",
     "e2e": "npm run env -s && ng e2e",
     "translations:extract": "ngx-translate-extract --input ./src --output ./src/translations/template.json --format=json --clean -sort --marker extract",
-    "docs": "hads ./docs -o",
     "env": "ngx-scripts env npm_package_version",
     "generate": "ng generate"
   },
