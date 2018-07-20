@@ -10,8 +10,8 @@ describe('forms tests', () => {
   });
 
   it('should display one empty form at starting', () => {
-    const present = page.isFormPresentWithId(0);
-    expect(page).toBeTruthy();
+    const count = page.getFormsCount();
+    expect(count).toEqual(1);
   });
 
   it('should add root form by add button', () => {
@@ -21,8 +21,9 @@ describe('forms tests', () => {
   });
 
   it('should remove root form by delete button', () => {
+    page.addRootFormByButtonClick();
     page.deleteFormByButtonClickAt(0);
     const count = page.getFormsCount();
-    expect(count).toEqual(0);
+    expect(count).toEqual(1);
   });
 });

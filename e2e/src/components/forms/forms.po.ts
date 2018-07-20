@@ -2,11 +2,10 @@ import { browser, element, by } from 'protractor';
 
 export class FormsPage {
 
-  addRootFormButtonId: string = 'addRootInputButton';
-  addSubInputButtonId: string = 'addSubInputButton';
-  deleteButtonId: string = 'deleteButton';
-  rootFormIds: string = 'rootForm';
-  firstRootFormId: string = 'rootForm0';
+  addRootFormButtonId: string = 'add-root-input-button';
+  addSubInputButtonId: string = 'add-sub-input-button';
+  deleteButtonId: string = 'delete-button';
+  rootFormIds: string = 'root-form';
 
   constructor() {
   }
@@ -27,10 +26,4 @@ export class FormsPage {
     const count = element.all(by.id(this.rootFormIds)).count();
     return count;
   }
-
-  isFormPresentWithId(id: number) {
-    const present = element(by.id(`rootFormIds{$id}`)).isPresent();
-    return present;
-  }
-
 }
