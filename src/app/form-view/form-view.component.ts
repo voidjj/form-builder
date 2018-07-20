@@ -11,9 +11,9 @@ import * as FormViewHelper from './form-view-helper';
 
 export class FormViewComponent implements OnInit {
   @Input() form: Form;
-  @Output() removeForm: EventEmitter<Form> = new EventEmitter<Form>();
+  @Output() reloadParentForm: EventEmitter<null> = new EventEmitter<null>();
   formViewGroup: FormGroup;
-  childrenForm: Form[];
+  childrenForms: Form[];
 
   logicResponses: Array<Object> = FormViewHelper.logicResponses;
   numberConditions: Array<Object> = FormViewHelper.numberConditions;
@@ -39,7 +39,7 @@ export class FormViewComponent implements OnInit {
   }
 
   applyChildrenForm() {
-    this.childrenForm = this.formDataService.getFormsOfParent(this.form);
+    this.childrenForms = this.formDataService.getFormsOfParent(this.form);
   }
 
   createSubForm() {
@@ -48,12 +48,11 @@ export class FormViewComponent implements OnInit {
   }
 
   deleteSubForm() {
-    this.removeForm.emit(this.form);
-    this.applyChildrenForm();
+    this.formDataService.removeForm(this.form);
+    this.reloadParentForm.emit(null);
   }
 
-  onRemoveEventForm(form: Form) {
-    this.formDataService.removeForm(form);
+  onReloadParentForm() {
     this.applyChildrenForm();
   }
 

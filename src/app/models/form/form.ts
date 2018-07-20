@@ -1,8 +1,7 @@
-
 export type formType = 'text' | 'number' | 'boolean';
 
 export class Form {
-  id: number = -1;
+  id: number;
   type: formType;
   question: string;
   root: boolean;

@@ -27,8 +27,7 @@ export class FormsComponent implements OnInit {
     this.applyForms();
   }
 
-  onRemoveForm(form: Form) {
-    this.formDataService.removeForm(form);
+  onReloadFormsRoot(form: Form) {
     this.applyForms();
   }
 
