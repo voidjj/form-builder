@@ -1,6 +1,5 @@
 <form [formGroup]="formViewGroup">
   <div *ngIf="form.root == false">
-    <!-- NUMBER QUESTION -->
     <div class="form-row" *ngIf="getParentType() == 'number'">
       <div class="form-group col-md-8">
         <label for="number-condition">Condition</label>
@@ -13,35 +12,32 @@
           <input type="number" id="number-response" name="numberResponse" class="form-control" formControlName="responseControl"/>
       </div>
     </div>
-  <!-- TEXT QUESTION -->
-  <div class="form-row" *ngIf="getParentType() == 'text'">
-    <div class="form-group col-md-8">
-      <label for="text-condition">Condition</label>
-        <select id="text-condition" name="condition" class="form-control" formControlName="conditionControl">
-          <option [value]="condition.value" *ngFor="let condition of logicConditions">{{condition.name}}</option>
-        </select>
+    <div class="form-row" *ngIf="getParentType() == 'text'">
+      <div class="form-group col-md-8">
+        <label for="text-condition">Condition</label>
+          <select id="text-condition" name="condition" class="form-control" formControlName="conditionControl">
+            <option [value]="condition.value" *ngFor="let condition of logicConditions">{{condition.name}}</option>
+          </select>
+      </div>
+      <div class="form-group col-md-4">
+        <label for="text-response">Text response</label>
+          <input type="text" id="text-response" name="textResponse" class="form-control" formControlName="responseControl"/>
+      </div>
     </div>
-    <div class="form-group col-md-4">
-      <label for="text-response">Text response</label>
-        <input type="text" id="text-response" name="textResponse" class="form-control" formControlName="responseControl"/>
+    <div class="form-row" *ngIf="getParentType() == 'boolean'">
+      <div class="form-group col-md-8">
+        <label for="condition">Condition</label>
+          <select id="condition" name="condition" class="form-control" formControlName="conditionControl">
+            <option [value]="condition.value" *ngFor="let condition of logicConditions">{{condition.name}}</option>
+          </select>
+      </div>
+      <div class="form-group col-md-4">
+        <label for="logic-response">Logic response</label>
+          <select id="logic-response" name="logicResponse" class="form-control" formControlName="responseControl">
+            <option [value]="response.value" *ngFor="let response of logicResponses">{{response.name}}</option>
+          </select>
+      </div>
     </div>
-  </div>
-  <!-- BOOLEAN QUESTION -->
-  <div class="form-row" *ngIf="getParentType() == 'boolean'">
-    <div class="form-group col-md-8">
-      <label for="condition">Condition</label>
-        <select id="condition" name="condition" class="form-control" formControlName="conditionControl">
-          <option [value]="condition.value" *ngFor="let condition of logicConditions">{{condition.name}}</option>
-        </select>
-    </div>
-    <div class="form-group col-md-4">
-      <label for="logic-response">Logic response</label>
-        <select id="logic-response" name="logicResponse" class="form-control" formControlName="responseControl">
-          <option [value]="response.value" *ngFor="let response of logicResponses">{{response.name}}</option>
-        </select>
-    </div>
-  </div>
-  <!-- QUESTIONS END-->
   </div>
   <div class="form-group">
     <label for="question">Question</label>
@@ -56,13 +52,13 @@
 </form>
 <div class="d-flex justify-content-between bd-highlight mb-3">
   <div class="p-2 bd-highlight">
-    <button class="btn btn-primary" (click)="createSubForm()">Add response input</button>
+    <button class="btn btn-primary" id="addSubInputButton" (click)="createSubForm()">Add response input</button>
   </div>
   <div class="p-2 bd-highlight">
-    <button class="btn btn-danger" (click)="deleteSubForm()">Delete</button></div>
+    <button class="btn btn-danger" id="deleteButton" (click)="deleteSubForm()">Delete</button></div>
 </div>
 <ul class="list-group">
-  <li class="list-group-item" *ngFor="let childrenForm of childrenForm">
-    <app-form-view [form]="childrenForm" (removeForm)="onRemoveEventForm($event)"></app-form-view>
+  <li class="list-group-item" *ngFor="let childrenForm of childrenForms">
+    <app-form-view [form]="childrenForm" (reloadParentForm)="onReloadParentForm($event)"></app-form-view>
   </li>
 </ul>

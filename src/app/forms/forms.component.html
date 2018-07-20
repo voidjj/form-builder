@@ -1,14 +1,13 @@
 <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
     <h5 class="my-0 mr-md-auto font-weight-normal">Form Builder</h5>
     <nav class="my-2 my-md-0 mr-md-3">
-      <!--  <a class="p-2 text-dark" (click)="clearForms()" href="#">Save as file</a> -->
       <a class="p-2 text-dark" (click)="loadFromBrowser()" href="#">Load from browser</a>
       <a class="p-2 text-dark" (click)="saveInBrowser()" href="#">Save in browser</a>
     </nav>
 </div>
 <ul class="list-group">
   <li class="list-group-item" *ngFor="let form of forms">
-    <app-form-view [form]="form" (removeForm)="onRemoveForm($event)"></app-form-view>
+      <app-form-view [form]="form" id="rootForm{{$index}}" (reloadParentForm)="onReloadFormsRoot($event)"></app-form-view>
   </li>
 </ul>
-<button class="btn btn-primary" (click)="createRootForm()">Add Input</button>
+<button class="btn btn-primary" id="addRootInputButton" (click)="createRootForm()">Add Input</button>
