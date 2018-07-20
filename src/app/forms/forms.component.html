@@ -7,7 +7,7 @@
 </div>
 <ul class="list-group">
   <li class="list-group-item" *ngFor="let form of forms">
-      <app-form-view [form]="form" id="rootForm{{$index}}" (reloadParentForm)="onReloadFormsRoot($event)"></app-form-view>
+      <app-form-view [form]="form" id="root-form" (reloadParentForm)="onReloadFormsRoot($event)"></app-form-view>
   </li>
 </ul>
-<button class="btn btn-primary" id="addRootInputButton" (click)="createRootForm()">Add Input</button>
+<button class="btn btn-primary" id="add-root-input-button" (click)="createRootForm()">Add Input</button>
