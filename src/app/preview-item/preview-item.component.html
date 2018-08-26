@@ -1,0 +1,24 @@
+<div *ngIf="form.question && form.type">
+  <form [formGroup]="formViewGroup">
+    <div class="form-group col-md-4" *ngIf="form.type == 'text'">
+        <label for="number-response">{{ form.question }}</label>
+        <input type="text" id="text-response" name="textResponse" class="form-control" formControlName="responseControl"/>
+    </div>
+    <div class="form-group col-md-4" *ngIf="form.type == 'number'">
+        <label for="number-response">{{ form.question }}</label>
+        <input type="number" id="number-response" name="numberResponse" class="form-control" formControlName="responseControl"/>
+    </div>
+    <div class="form-group col-md-4" *ngIf="form.type == 'boolean'">
+        <label for="number-response">{{ form.question }}</label>
+        <select id="logic-response" name="logicResponse" class="form-control" formControlName="responseControl">
+          <option [value]="response.value" *ngFor="let response of logicResponses">{{response.name}}</option>
+        </select>
+    </div>
+  </form>
+  <ul class="list-group">
+    <li class="list-group-item" *ngFor="let childrenForm of childrenForms">
+        <app-preview-item [form]="childrenForm"></app-preview-item>
+    </li>
+  </ul>
+</div>
+<div *ngIf="!form.question || !form.type">empty question</div>

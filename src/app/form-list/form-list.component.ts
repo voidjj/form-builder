@@ -1,39 +1,36 @@
 import { Component, OnInit } from '@angular/core';
-import { Input, Output, EventEmitter } from '@angular/core';
 import { Form } from '../models/form/form';
 import { FormDataService } from '../form-data.service';
 
 @Component({
   selector: 'app-forms',
-  templateUrl: './forms.component.html',
-  providers: [FormDataService]
+  templateUrl: './form-list.component.html'
 })
 
-export class FormsComponent implements OnInit {
+export class FormListComponent implements OnInit {
   forms: Form[];
 
   constructor(private formDataService: FormDataService) { }
   ngOnInit() {
-    this.formDataService.createRootForm();
-    this.applyForms();
+    this.loadForms();
   }
 
-  applyForms() {
+  loadForms() {
     this.forms = this.formDataService.getRootForms();
   }
 
   createRootForm() {
     this.formDataService.createRootForm();
-    this.applyForms();
+    this.loadForms();
   }
 
   onReloadFormsRoot(form: Form) {
-    this.applyForms();
+    this.loadForms();
   }
 
   loadFromBrowser() {
     this.formDataService.loadFromStorage();
-    this.applyForms();
+    this.loadForms();
   }
 
   saveInBrowser() {

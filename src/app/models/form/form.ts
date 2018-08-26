@@ -7,7 +7,7 @@ export class Form {
   root: boolean;
   parentId: number;
   condition: string;
-  response: string;
+  response: string | number;
 
   constructor(id: number, root: boolean, parentId: number, type: formType) {
     this.id = id;

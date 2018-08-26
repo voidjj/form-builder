@@ -1,4 +1,4 @@
-import { Injectable , Directive } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Form } from './models/form/form';
 import * as _ from 'lodash';
 
@@ -10,51 +10,76 @@ export class FormDataService {
   lastId = 0;
   forms: Form[] = new Array<Form>();
 
-  getNextId(): number {
-    this.lastId++;
-    return this.lastId;
+  getNextFormId(): number {
+    return this.lastId++;
   }
 
   getRootForms(): Form[] {
-    const forms: Form[] = _.filter(this.forms, {root: true});
-    return forms;
+    return _.filter(this.forms, {root: true});
   }
 
   getFormsOfParent(parentForm: Form): Form[] {
-    const childrenForm: Form[] = _.filter(this.forms, {parentId: parentForm.id});
-    return childrenForm;
+    return _.filter(this.forms, {parentId: parentForm.id});
   }
 
   createRootForm() {
-    const newForm: Form = Form.createRoot(this.getNextId());
+    const newForm: Form = Form.createRoot(this.getNextFormId());
     this.forms.push(newForm);
   }
 
   createFormWithParent(parentForm: Form) {
-    const newForm: Form = Form.create(this.getNextId(), parentForm.id, parentForm.type);
+    const newForm: Form = Form.create(this.getNextFormId(), parentForm.id, parentForm.type);
     this.forms.push(newForm);
   }
 
-  updageForm(form: Form): Form {
-    const oldForm = this.forms.find(f => f.id === form.id);
-    const newForm = Object.assign(oldForm, form);
-    return newForm;
+  getParentOf(form: Form): Form {
+    return this.forms.find(f => f.id === form.parentId);
   }
 
-  getParentOf(form: Form): Form {
-    const parentForm = this.forms.find(f => f.id === form.parentId);
-    return parentForm;
+  getFormsWithResponse(form: Form, userResponse: string | number): Form[] {
+    const getFormsOfParent: Form[] = this.getFormsOfParent(form);
+    if (_.isEmpty(getFormsOfParent)) {
+       return [];
+    }
+
+    if (form.type === 'text' || form.type === 'boolean') {
+      return _.filter(getFormsOfParent, (f: Form) => {
+        return f.response === userResponse;
+      });
+    }
+
+    if (form.type === 'number') {
+      const numberResponse = _.toInteger(userResponse);
+      return _.filter(getFormsOfParent, (f: Form) => {
+        return f.response === numberResponse && f.condition === 'equals' ||
+               f.response < userResponse && f.condition === 'greater_than' ||
+               f.response > userResponse && f.condition === 'less_than' ;
+      });
+    }
   }
 
   removeForm(form: Form) {
     _.remove(this.forms, {id: form.id});
   }
 
+  removeFormWithChildren(form: Form) {
+    const children = this.getFormsOfParent(form);
+    _.forEach(children, (f: Form) => {
+      this.removeFormWithChildren(f);
+      this.removeForm(f);
+    });
+    this.removeForm(form);
+  }
+
   saveInStorage() {
-    localStorage.setItem('formbuilder', JSON.stringify(this.forms));
+    localStorage.setItem('formbuilder', this.getStringifyForms());
   }
 
   loadFromStorage() {
     this.forms = JSON.parse(localStorage.getItem('formbuilder'));
+  }
+
+  getStringifyForms(): string {
+    return  JSON.stringify(this.forms);
   }
 }
