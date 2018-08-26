@@ -21,8 +21,7 @@ Open browser on address: localhost:8080
 
 # Todo
 
-1. Add save forms as file functionality
-2. Add tests for all components
+1. Change storage type into immutable lists
 
 # License
 
